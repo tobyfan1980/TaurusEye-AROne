@@ -1,0 +1,26 @@
+<header  ng-include="'views/nav.html'"></header>
+<!--
+<p class="lead">
+  <a ng-if="currentUser.name==='admin'" class="btn btn-default pull-left" ui-sref="notes.add" href="" >
+    <i class="glyphicon glyphicon-plus-sign"></i>
+  </a>
+</p>
+-->
+
+<div ng-repeat="note in notes">
+  <div class="panel panel-default">
+    <div class="panel-heading" align="center">
+      <!--<a ui-sref="notes.item({id:note.id})" href="">{{note.name}}</a>-->
+      <p><h3>{{note.date}}</h3></p>
+    </div>
+    <div class="panel-body">
+      <pre>{{note.note}}</pre>
+    </div>
+  </div>
+</div>
+
+<div ng-hide="notes.length">
+  <h4>
+    <a >There are no notifications.</a>
+  </h4>
+</div>

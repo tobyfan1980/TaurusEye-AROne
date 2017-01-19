@@ -1,0 +1,33 @@
+{
+    "team": "TaurusEye",
+    "project": "AR-Fire",
+    "host": "127.0.0.1",
+    "port": 8888,
+    "adminPort": 7777,
+    "mongodb": {
+        "host": "127.0.0.1",
+        "port": null,
+        "database": "arone",
+        "user": "root",
+        "password": null
+    },
+
+    "login": {
+        "facebook": {
+            "mocked": true
+        },
+        "wechat": {
+            "mocked": true
+        }
+    },
+    "logger": {
+        "handleExceptions": true,
+        "stringify": true,
+        "timestamp": true
+    },
+    "admin": {
+        "passcode": "arone2016"
+    }
+
+
+}

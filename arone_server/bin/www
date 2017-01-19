@@ -1,0 +1,80 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var Application = require('../app.js');
+var process = require("process");
+var http = require('http');
+var fs = require("fs");
+var path = require("path");
+var winston = require("winston");
+
+
+var argv = require('minimist')(process.argv.slice(2));
+
+
+
+// get config
+var config_file_name = "./config/development.json";
+if (argv['config']){
+    config_file_name = "./config/" + argv['config'] + ".json";
+
+}
+
+var common_config_file_name = './config/common.json';
+
+var config = JSON.parse(fs.readFileSync(common_config_file_name, 'utf8'));
+
+console.log("loading common config");
+console.log(config);
+console.log("loading %s", config_file_name);
+
+if (fs.existsSync(config_file_name)){
+    var extra_config = JSON.parse(fs.readFileSync(config_file_name, 'utf8'));
+
+    for (var key in extra_config){
+        config[key] = extra_config[key];
+    }
+}
+
+console.log("CONFIG env: %s", config.env);
+
+//setup log
+var logger = new winston.Logger({
+    exitOnError: false
+});
+
+if (!config.env || config.env === "test"){
+    logger.configure({
+        level: 'debug',
+        transports: [
+            new (winston.transports.Console)(config.logger)
+
+        ]
+    });
+}else{
+    config.logger.filename = "seryer-ar-one.log";
+    logger.configure({
+        level: 'info',
+        transports: [
+            new (require("winston-daily-rotate-file"))(config.logger)
+        ]
+    });
+}
+logger.info("config loaded and logger setup");
+
+var app = Application({
+    logger: logger,
+    config: config
+});
+
+app.bootstrap(function (err) {
+   if(err){
+       throw err;
+   }
+
+    logger.info("TaurusEye AR One server started");
+});
+

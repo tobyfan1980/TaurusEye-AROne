@@ -1,0 +1,16 @@
+<header  ng-include="'views/nav.html'"></header>
+<form name = "noteForm" role="form" ng-submit="createNote()">
+  <div class="row">
+    <div class="form-group col-sm-6 col-md-4">
+      <label for="description">Notification</label>
+      <textarea class="form-control" rows='4' id="desc" placeholder="Write notes here" ng-model="note"></textarea>
+    </div>
+
+  </div>
+
+  <button type="submit" class="btn btn-default">Create</button>
+
+</form>
+
+<p><span style="color:red">{{error_msg}}</span></p>
+
